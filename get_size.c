@@ -9,20 +9,19 @@
  */
 int size_getter(const char *format, int *i)
 {
-	int now_i = *i + 1;
+	int now_i= *i + 1;
 	int size = 0;
 
-	if (format[now_i] == 'l')
-		size = SHT_LONG;
-	else if (format[now_i] == 'h')
-		size = SHT_SHORT;
+	if (format[curr_i] == 'l')
+		size = S_LONG;
+	else if (format[curr_i] == 'h')
+		size = S_SHORT;
 
 	if (size == 0)
-		*i = now_i - 1;
+		*i = now_i- 1;
 	else
-		*i = now_i;
+		*i = curr_i;
 
 	return (size);
 }
 /*Group: Stephen Amponsah and Jonah Etuaful*/
-
