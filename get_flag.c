@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * get_flag - condition that turns on flags if _printf finds
  * a flag modifier in the format string
