@@ -10,24 +10,24 @@
  */
 int precision_getter(const char *format, int *i, va_list list)
 {
-	int now_i = *i + 1;
+	int now_i= *i + 1;
 	int precision = -1;
 
-	if (format[now_i] != '.')
+	if (format[curr_i] != '.')
 		return (precision);
 
 	precision = 0;
 
-	for (now_i += 1; format[now_i] != '\0'; now_i++)
+	for (now_i+= 1; format[curr_i] != '\0'; curr_i++)
 	{
-		if (is_numeric(format[now_i]))
+		if (is_digit(format[curr_i]))
 		{
 			precision *= 10;
-			precision += format[now_i] - '0';
+			precision += format[curr_i] - '0';
 		}
-		else if (format[now_i] == '*')
+		else if (format[curr_i] == '*')
 		{
-			now_i++;
+			curr_i++;
 			precision = va_arg(list, int);
 			break;
 		}
@@ -35,9 +35,8 @@ int precision_getter(const char *format, int *i, va_list list)
 			break;
 	}
 
-	*i = now_i - 1;
+	*i = now_i- 1;
 
 	return (precision);
 }
 /*Group: Stephen Amponsah and Jonah Etuaful*/
-

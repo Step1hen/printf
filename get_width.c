@@ -10,19 +10,19 @@
  */
 int width_getter(const char *format, int *i, va_list list)
 {
-	int now_i;
+	int curr_i;
 	int width = 0;
 
-	for (now_i = *i + 1; format[now_i] != '\0'; now_i++)
+	for (now_i= *i + 1; format[curr_i] != '\0'; curr_i++)
 	{
-		if (is_numeric(format[now_i]))
+		if (is_digit(format[curr_i]))
 		{
 			width *= 10;
-			width += format[now_i] - '0';
+			width += format[curr_i] - '0';
 		}
-		else if (format[now_i] == '*')
+		else if (format[curr_i] == '*')
 		{
-			now_i++;
+			curr_i++;
 			width = va_arg(list, int);
 			break;
 		}
@@ -30,9 +30,8 @@ int width_getter(const char *format, int *i, va_list list)
 			break;
 	}
 
-	*i = now_i - 1;
+	*i = now_i- 1;
 
 	return (width);
 }
 /*Group: Stephen Amponsah and Jonah Etuaful*/
-
