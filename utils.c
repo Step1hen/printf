@@ -23,7 +23,7 @@ int is_printable(char c)
 int add_hexa_code(char ascii_rep, char buffer[], int i)
 {
 	char compare_to[] = "0123456789ABCDEF";
-	/* The hexa formated code should always be 2 nums long */
+	/* The hexa format code is always 2 digits long */
 	if (ascii_rep < 0)
 		ascii_rep *= -1;
 
@@ -42,7 +42,7 @@ int add_hexa_code(char ascii_rep, char buffer[], int i)
  *
  * Return: This will return 1 if c is a number, else returns 0
  */
-int is_numeric(char c)
+int is_digit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -59,26 +59,26 @@ int is_numeric(char c)
  */
 long int num_size_changer(long int num, int size)
 {
-	if (size == SHT_LONG)
+	if (size == S_LONG)
 		return (num);
-	else if (size == SHT_SHORT)
+	else if (size == S_SHORT)
 		return ((short)num);
 
 	return ((int)num);
 }
 
 /**
- * usnd_size_changer - Changes a num to the wanted size
+ * usnd_size_changer - will change a num to the wanted size
  * @num: The number to be changed or altered
  * @size: The number indicating the data type to be changed
  *
- * Return: Changed value of num
+ * Return: this will modify value of num
  */
 long int usnd_size_changer(unsigned long int num, int size)
 {
-	if (size == SHT_LONG)
+	if (size == S_LONG)
 		return (num);
-	else if (size == SHT_SHORT)
+	else if (size == S_SHORT)
 		return ((unsigned short)num);
 
 	return ((unsigned int)num);
