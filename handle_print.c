@@ -1,17 +1,17 @@
 #include "main.h"
 /**
  * handle_print - This will output an argument based on its type
- * @fmt: All formatted strings in which to print.
- * @list: the arguments to be printed.
- * @ind: index arguement
+ * @fmt: All formatted strings which are to be printed.
+ * @list: the condition to be outputed.
+ * @ind: index of the loop
  * @buffer: this is a buffer list to deal with print.
- * @flags: this calculates the active flags
+ * @flags: this will calculate the active available flags
  * @width: get the width.
  * @precision: get the precise identity
  * @size: Size specifier
  * Return: it will return 1 or 2;
  */
-int handle_print(const char *fmt, int *ind, va_list list, char buffer[],
+int print_handlert(const char *fmt, int *ind, va_list list, char buffer[],
 	int flags, int width, int precision, int size)
 {
 	int i, unknow_len = 0, chars_prntd = -1;
@@ -24,7 +24,7 @@ int handle_print(const char *fmt, int *ind, va_list list, char buffer[],
 	};
 	for (i = 0; fmt_types[i].fmt != '\0'; i++)
 		if (fmt[*ind] == fmt_types[i].fmt)
-			return (fmt_types[i].func(list, buffer, flags, width, precision, size));
+			return (fmt_types[i].fn(list, buffer, flags, width, precision, size));
 
 	if (fmt_types[i].fmt == '\0')
 	{

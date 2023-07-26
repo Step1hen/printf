@@ -5,7 +5,7 @@
 /**
  * main - The entry point to the program
  *
- * Return: This always 0 after execution
+ * return: This always 0 after execution
  */
 int main(void)
 {
