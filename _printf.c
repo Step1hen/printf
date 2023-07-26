@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * _printf - give an output in relation to a desired format
  * @format: format string containing the chars and spcifiers
@@ -20,22 +21,22 @@ int _printf(const char *format, ...)
 		return (-1);
 	if (format[0] == '%' && format[1] == ' ' && !format[2])
 		return (-1);
-	for (new = format; *new; new ++)
+	for (new = format; *new; new++)
 	{
 		if (*new == '%')
 		{
-			new ++;
+			new++;
 			if (*new == '%')
 			{
 				count += _putchar('%');
 				continue;
 			}
 			while (get_flag(*new, &flags))
-				new ++;
+				new++;
 			pfunc = get_print(*new);
 			count += (pfunc)
-						 ? pfunc(ap, &flags)
-						 : _printf("%%%c", *new);
+				? pfunc(ap, &flags)
+				: _printf("%%%c", *new);
 		}
 		else
 			count += _putchar(*new);
