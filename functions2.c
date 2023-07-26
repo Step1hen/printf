@@ -15,7 +15,7 @@ int pnt_printer(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
 	char other_char = 0, prnt_add = ' ';
-	int ind = MAX_BUFFER_SIZE - 2, length = 2, start_p_add = 1; /* length=2, for '0x' */
+	int ind = BUFF_SIZE - 2, length = 2, prnt_add_start = 1; /* length=2, for '0x' */
 	unsigned long num_addrs;
 	char compare_to[] = "0123456789abcdef";
 	void *addrs = va_arg(types, void *);
@@ -26,7 +26,7 @@ int pnt_printer(va_list types, char buffer[],
 	if (addrs == NULL)
 		return (write(1, "(nil)", 5));
 
-	buffer[MAX_BUFFER_SIZE - 1] = '\0';
+	buffer[BUFF_SIZE - 1] = '\0';
 	UNUSED(precision);
 
 	num_addrs = (unsigned long)addrs;
@@ -38,29 +38,29 @@ int pnt_printer(va_list types, char buffer[],
 		length++;
 	}
 
-	if ((flags & FLG_ZERO) && !(flags & FLG_NEGATIVE))
+	if ((flags & F_ZERO) && !(flags & F_MINUS))
 		prnt_add = '0';
-	if (flags & FLG_PLUS)
+	if (flags & F_PLUS)
 		other_char = '+', length++;
-	else if (flags & FLG_BLANK)
+	else if (flags & F_SPACE)
 		other_char = ' ', length++;
 
 	ind++;
 
-	/*return (write(1, &buffer[i], MAX_BUFFER_SIZE - i - 1));*/
-	return (write_pointer(buffer, ind, length,
-		width, flags, prnt_add, other_char, start_p_add));
+	/*return (write(1, &buffer[i], BUFF_SIZE - i - 1));*/
+	return (pnt_setter(buffer, ind, length,
+		width, flags, prnt_add, other_char, prnt_add_start));
 }
 
-/********* PRINT NON PRINTABLE ************/
+/************************* PRINT NON PRINTABLE *************************/
 /**
- * print_non_printable - Prints ascii codes in hexa of non printable chars
- * @types: List a of all arguments
- * @buffer: Buffer list to print
- * @flags:  Gets all active flags.
- * @width: gets the absolute width.
- * @precision: gets the precision specifier
- * @size: get the size specifier
+ * not_printable_printer - Prints ascii codes in hexa of non printable chars
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width
+ * @precision: Precision specification
+ * @size: Size specifier
  * Return: Number of chars printed
  */
 int not_printable_printer(va_list types, char buffer[],
@@ -92,15 +92,15 @@ int not_printable_printer(va_list types, char buffer[],
 	return (write(1, buffer, i + offset));
 }
 
-/******* PRINT REVERSE VALUE **********/
+/************************* PRINT REVERSE *************************/
 /**
  * reverse_printer - Prints reverse string.
- * @types: List a of all arguments
- * @buffer: Buffer list to print
- * @flags:  Gets all active flags.
- * @width: gets the absolute width.
- * @precision: gets the precision specifier
- * @size: get the size specifier
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width
+ * @precision: Precision specification
+ * @size: Size specifier
  * Return: Numbers of chars printed
  */
 
@@ -135,15 +135,15 @@ int reverse_printer(va_list types, char buffer[],
 	}
 	return (count);
 }
-/******** PRINT A STRING IN ROT13 *******/
+/************************* PRINT A STRING IN ROT13 *************************/
 /**
  * rot13str_printer - Print a string in rot13.
- * @types: List of all arguments
- * @buffer: Buffer list to print
- * @flags:  Gets all active flags.
- * @width: gets the absolute width.
- * @precision: gets the precision specifier
- * @size: get the size specifier
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width
+ * @precision: Precision specification
+ * @size: Size specifier
  * Return: Numbers of chars printed
  */
 int rot13str_printer(va_list types, char buffer[],
@@ -151,7 +151,7 @@ int rot13str_printer(va_list types, char buffer[],
 {
 	char x;
 	char *str;
-	unsigned int i, k;
+	unsigned int i, j;
 	int count = 0;
 	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
@@ -167,17 +167,17 @@ int rot13str_printer(va_list types, char buffer[],
 		str = "(AHYY)";
 	for (i = 0; str[i]; i++)
 	{
-		for (k = 0; in[k]; k++)
+		for (j = 0; in[j]; j++)
 		{
-			if (in[k] == str[i])
+			if (in[j] == str[i])
 			{
-				x = out[k];
+				x = out[j];
 				write(1, &x, 1);
 				count++;
 				break;
 			}
 		}
-		if (!in[k])
+		if (!in[j])
 		{
 			x = str[i];
 			write(1, &x, 1);
